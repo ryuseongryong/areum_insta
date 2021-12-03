@@ -10,7 +10,8 @@
       cellspacing="1"
     >
       <caption>
-        [링크를 입력하세요.]
+        <input id="server" />
+        [서버주소를 입력하세요.]
       </caption>
       <thead>
         <tr align="center" bgcolor="white">
@@ -65,15 +66,29 @@ export default defineComponent({
         (document.getElementById('linkUrl') as HTMLInputElement)?.value
       );
       axios
-        .post('http://localhost:3919/scraping/input', {
-          url: (document.getElementById('linkUrl') as HTMLInputElement)?.value,
-        })
+        .post(
+          `${
+            (document.querySelector('#server') as HTMLInputElement)?.value
+          }/scraping/input`,
+          {
+            url: (document.getElementById('linkUrl') as HTMLInputElement)
+              ?.value,
+          }
+        )
         .then((res) => {
+          (document.getElementById('likes') as HTMLTableRowElement).innerText =
+            res.data.likes;
+          (
+            document.getElementById('replies') as HTMLTableRowElement
+          ).innerText = res.data.replies;
+          (
+            document.getElementById('followers') as HTMLTableRowElement
+          ).innerText = res.data.followers;
+          // (document.getElementById('title') as HTMLTableRowElement).innerText =
+          //   res.data.title;
           (
             document.getElementById('username') as HTMLTableColElement
           ).innerText = res.data.name;
-          (document.getElementById('title') as HTMLTableRowElement).innerText =
-            res.data.title;
         })
         .catch((err) => {
           console.log('err...', err);
@@ -89,9 +104,15 @@ export default defineComponent({
         (document.getElementById('linkUrl') as HTMLInputElement)?.value
       );
       axios
-        .post('http://localhost:3919/scraping/input', {
-          url: (document.getElementById('linkUrl') as HTMLInputElement)?.value,
-        })
+        .post(
+          `${
+            (document.querySelector('#server') as HTMLInputElement)?.value
+          }/scraping/input`,
+          {
+            url: (document.getElementById('linkUrl') as HTMLInputElement)
+              ?.value,
+          }
+        )
         .then((res) => {
           (document.getElementById('likes') as HTMLTableRowElement).innerText =
             res.data.likes;
