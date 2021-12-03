@@ -1,22 +1,40 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-    <img class="pic" alt="SR logo" :src="require('@/assets/developer D.png')" />
-    <Insta msg="인스타그램 링크로 좋아요, 댓글, 팔로워 수 확인하기" />
-    <div></div>
+    <p>ryuseongryong@gmail.com</p>
+    <div id="main-pic">
+      <img
+        class="pic"
+        alt="SR logo"
+        :src="require('@/assets/developer D.png')"
+      />
+    </div>
+    <body>
+      <ul id="nav">
+        <li>
+          <router-link to="/" class="active">HOME</router-link>
+        </li>
+        <li>
+          <router-link to="/instaone" class="nav">Insta One</router-link>
+        </li>
+        <li>
+          <router-link to="/instamany" class="nav">Insta Many</router-link>
+        </li>
+      </ul>
+      <div id="view">
+        <router-view />
+      </div>
+    </body>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 // import HelloWorld from './components/HelloWorld.vue';
-import Insta from './components/Insta.vue';
+// import Insta from './components/Insta.vue';
+// import InstaMany from './components/InstaMany.vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    Insta,
-  },
 });
 </script>
 
@@ -27,10 +45,52 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 30px;
 }
+
+#main-pic {
+  align-content: center;
+  margin: 1rem;
+}
+
 .pic {
   width: 180px;
   height: 210px;
+}
+
+body {
+  display: flex;
+}
+
+#nav {
+  text-align: center;
+  min-width: 9rem;
+  max-height: 10rem;
+}
+
+#view {
+  min-width: 50rem;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0.5rem;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 0.8rem 1.6rem;
+  text-decoration: none;
+}
+li a.active {
+  background-color: #4caf50;
+  color: white;
+}
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
 }
 </style>

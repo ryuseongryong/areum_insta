@@ -2,7 +2,7 @@
   <div>
     <h1>{{ msg }}</h1>
     <table
-      id="table"
+      id="table-M"
       border="1"
       align="center"
       width="50%"
@@ -11,7 +11,7 @@
     >
       <caption>
         [서버주소]
-        <input id="server" />
+        <input id="server-M" />
       </caption>
       <thead>
         <tr align="center" bgcolor="white">
@@ -20,23 +20,23 @@
           <th>좋아요</th>
           <th>댓글</th>
           <th>팔로워</th>
-          <th>유저아이디</th>
+          <th>입력된 링크 수</th>
         </tr>
       </thead>
 
       <tbody>
         <tr align="center" bgcolor="white">
-          <th id="link">
+          <th id="link-M">
             <input
-              id="linkUrl"
+              id="linkUrl-M"
               placeholder="https://www.instagram.com/p/CWsAX5UhrIY/"
               @keyup.enter="done()"
             />
           </th>
-          <td id="likes" class="blank"></td>
-          <td id="replies" class="blank"></td>
-          <td id="followers" class="blank"></td>
-          <td id="username" class="blank"></td>
+          <td id="likes-M" class="blank"></td>
+          <td id="replies-M" class="blank"></td>
+          <td id="followers-M" class="blank"></td>
+          <td id="links-M" class="blank"></td>
         </tr>
       </tbody>
     </table>
@@ -52,7 +52,7 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 
 export default defineComponent({
-  name: 'Insta',
+  name: 'InstaMany',
   props: {
     msg: String,
   },
@@ -60,27 +60,35 @@ export default defineComponent({
     done: () => {
       console.log(
         'axios...',
-        (document.getElementById('linkUrl') as HTMLInputElement)?.value
+        (document.getElementById('linkUrl-M') as HTMLInputElement)?.value
       );
+      const urlsString: String = (
+        document.getElementById('linkUrl-M') as HTMLInputElement
+      )?.value;
+      const urlArr: Array<string> = urlsString
+        .split(' ')
+        .filter((url) => url.slice(0, 27) === 'https://www.instagram.com/p');
+
       const serverUrl =
-        (document.querySelector('#server') as HTMLInputElement)?.value ||
+        (document.querySelector('#server-M') as HTMLInputElement)?.value ||
         'http://localhost:3919';
       axios
-        .post(`${serverUrl}/scraping/input`, {
-          url: (document.getElementById('linkUrl') as HTMLInputElement)?.value,
+        .post(`${serverUrl}/scraping/inputMany`, {
+          urlArr,
         })
         .then((res) => {
-          (document.getElementById('likes') as HTMLTableRowElement).innerText =
-            res.data.likes;
           (
-            document.getElementById('replies') as HTMLTableRowElement
-          ).innerText = res.data.replies;
+            document.getElementById('likes-M') as HTMLTableRowElement
+          ).innerText = res.data.totalLikes;
           (
-            document.getElementById('followers') as HTMLTableRowElement
-          ).innerText = res.data.followers;
+            document.getElementById('replies-M') as HTMLTableRowElement
+          ).innerText = res.data.totalReplies;
           (
-            document.getElementById('username') as HTMLTableColElement
-          ).innerText = res.data.name;
+            document.getElementById('followers-M') as HTMLTableRowElement
+          ).innerText = res.data.totalFollowers;
+          (
+            document.getElementById('links-M') as HTMLTableColElement
+          ).innerText = res.data.links;
         })
         .catch((err) => {
           console.log('err...', err);
