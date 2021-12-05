@@ -8,18 +8,28 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
+    path: '/howtouse',
+    name: 'HowToUse',
+    component: () => import('../views/HowToUse.vue'),
+  },
+  {
     path: '/instaone',
     name: 'InstaOneView',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/InstaOne.vue'),
+    component: () => import('../views/InstaOne.vue'),
   },
+
   {
     path: '/instamany',
     name: 'InstaManyView',
     component: () => import('../views/InstaMany.vue'),
+  },
+  {
+    path: '/instasum',
+    name: 'InstaSumView',
+    component: () => import('../views/InstaSum.vue'),
   },
 ];
 

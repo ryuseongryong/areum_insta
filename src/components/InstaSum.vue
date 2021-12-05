@@ -2,7 +2,7 @@
   <div>
     <h1>{{ msg }}</h1>
     <table
-      id="table"
+      id="table-S"
       border="1"
       align="center"
       width="50%"
@@ -11,34 +11,34 @@
     >
       <caption>
         [서버주소]
-        <input id="server" placeholder="위의 이메일로 연락주세요!" />
+        <input id="server-S" placeholder="위의 이메일로 연락주세요!" />
       </caption>
       <thead>
         <tr align="center" bgcolor="white">
           <!-- <td></td> -->
           <th>링크 입력</th>
-          <th>유저이름</th>
           <th>팔로워</th>
           <th>좋아요</th>
           <th>댓글</th>
           <th>인게이지먼트</th>
+          <th>입력된 링크 수</th>
         </tr>
       </thead>
 
       <tbody>
         <tr align="center" bgcolor="white">
-          <th id="link">
+          <th id="link-S">
             <input
-              id="linkUrl"
-              placeholder="https://www.instagram.com/p/CWsAX5UhrIY/"
+              id="linkUrl-S"
+              placeholder="https://www.instagram.com/p/"
               @keyup.enter="done()"
             />
           </th>
-          <td id="username" class="blank"></td>
-          <td id="followers" class="blank"></td>
-          <td id="likes" class="blank"></td>
-          <td id="replies" class="blank"></td>
-          <td id="engagements" class="blank"></td>
+          <td id="followers-S" class="blank"></td>
+          <td id="likes-S" class="blank"></td>
+          <td id="replies-S" class="blank"></td>
+          <td id="engagements-S" class="blank"></td>
+          <td id="links-S" class="blank"></td>
         </tr>
       </tbody>
     </table>
@@ -54,7 +54,7 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 
 export default defineComponent({
-  name: 'Insta',
+  name: 'InstaSum',
   props: {
     msg: String,
   },
@@ -62,30 +62,37 @@ export default defineComponent({
     done: () => {
       console.log(
         'axios...',
-        (document.getElementById('linkUrl') as HTMLInputElement)?.value
+        (document.getElementById('linkUrl-S') as HTMLInputElement)?.value
       );
+      const urlsString: String = (
+        document.getElementById('linkUrl-S') as HTMLInputElement
+      )?.value;
+      const urlArr: Array<string> = urlsString
+        .split(' ')
+        .filter((url) => url.slice(0, 27) === 'https://www.instagram.com/p');
       const serverUrl =
-        (document.querySelector('#server') as HTMLInputElement)?.value ||
+        (document.querySelector('#server-S') as HTMLInputElement)?.value ||
         'http://localhost:3919';
       axios
-        .post(`${serverUrl}/scraping/input`, {
-          url: (document.getElementById('linkUrl') as HTMLInputElement)?.value,
+        .post(`${serverUrl}/scraping/inputSum`, {
+          urlArr,
         })
         .then((res) => {
           (
-            document.getElementById('username') as HTMLTableColElement
-          ).innerText = res.data.name;
+            document.getElementById('likes-S') as HTMLTableRowElement
+          ).innerText = res.data.totalLikes;
           (
-            document.getElementById('followers') as HTMLTableRowElement
-          ).innerText = res.data.followers;
-          (document.getElementById('likes') as HTMLTableRowElement).innerText =
-            res.data.likes;
+            document.getElementById('replies-S') as HTMLTableRowElement
+          ).innerText = res.data.totalReplies;
           (
-            document.getElementById('replies') as HTMLTableRowElement
-          ).innerText = res.data.replies;
+            document.getElementById('followers-S') as HTMLTableRowElement
+          ).innerText = res.data.totalFollowers;
           (
-            document.getElementById('engagements') as HTMLTableRowElement
-          ).innerText = res.data.engagements;
+            document.getElementById('engagements-S') as HTMLTableRowElement
+          ).innerText = res.data.totalEngages;
+          (
+            document.getElementById('links-S') as HTMLTableColElement
+          ).innerText = res.data.links;
         })
         .catch((err) => {
           console.log('err...', err);
@@ -114,7 +121,7 @@ tbody {
 h3 {
   margin: 40px 0 0;
 }
-ul {
+/* ul {
   list-style-type: none;
   padding: 0;
 }
@@ -124,5 +131,5 @@ li {
 }
 a {
   color: #42b983;
-}
+} */
 </style>

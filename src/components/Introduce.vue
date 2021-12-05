@@ -1,6 +1,13 @@
 <template>
   <div id="intro">
-    <h1>{{ msg }}</h1>
+    <h1>{{ head1 }}</h1>
+    <h2>{{ head2 }}</h2>
+    <h3>{{ head3 }}</h3>
+    <ol v-if="items.length">
+      <li v-for="(item, idx) in items" v-bind:key="idx">
+        {{ item.msg }}
+      </li>
+    </ol>
   </div>
 </template>
 
@@ -8,9 +15,26 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'HelloWorld',
+  name: 'Introduce',
   props: {
-    msg: String,
+    head1: String,
+    head2: String,
+    head3: String,
+    items: Array,
   },
 });
 </script>
+<style scoped>
+ol {
+  padding-left: 10rem;
+}
+li {
+  text-align: left;
+}
+
+@media screen and (max-width: 900px) {
+  ol {
+    padding-left: 3rem;
+  }
+}
+</style>
