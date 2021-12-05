@@ -23,7 +23,7 @@
       </caption>
       <thead>
         <tr align="center" bgcolor="white">
-          <!-- <td></td> -->
+          <!-- <td class="blank">Index</td> -->
           <th class="blank">링크</th>
           <th class="blank">유저이름</th>
           <th class="blank">팔로워</th>
@@ -36,7 +36,7 @@
       <tbody v-if="instaArr.length">
         <tr
           v-for="(insta, idx) in instaArr"
-          v-bind:key="insta + idx"
+          v-bind:key="idx"
           align="center"
           bgcolor="white"
         >
@@ -47,7 +47,9 @@
           <td id="replies-M" class="blank"></td>
           <td id="engagements-M" class="blank"></td> -->
 
-          <!-- <th class="blank">{{ idx + 1 }}</th> -->
+          <!-- <th class="blank">
+            {{ idx + 1 }}
+          </th> -->
           <td class="blank">{{ insta.link }}</td>
           <td class="blank">{{ insta.username }}</td>
           <td class="blank">{{ insta.followers }}</td>
