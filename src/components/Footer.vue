@@ -89,4 +89,17 @@ li a:hover {
   color: white;
   transform: scale(1.1);
 }
+@media screen and (max-width: 500px) {
+  li {
+    white-space: nowrap;
+    font-size: 10px;
+  }
+  li a {
+    white-space: nowrap;
+    font-size: 10px;
+  }
+  #sign {
+    font-size: 10px;
+  }
+}
 </style>

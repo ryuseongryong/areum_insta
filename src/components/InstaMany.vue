@@ -145,4 +145,45 @@ export default defineComponent({
   height: 20px;
   max-height: 20px;
 }
+
+tbody {
+  max-height: 200px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 5px;
+}
+a {
+  color: #42b983;
+}
+@media screen and (max-width: 768px) {
+  .blank {
+    min-width: 80px;
+    width: 50%;
+    height: 20px;
+    max-height: 20px;
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 500px) {
+  h1 {
+    font-size: 25px;
+  }
+
+  input {
+    width: 150px;
+  }
+  .blank {
+    min-width: 40px;
+    width: 50%;
+    height: 10px;
+    max-height: 20px;
+    font-size: 9px;
+  }
+}
 </style>

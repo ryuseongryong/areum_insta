@@ -40,9 +40,19 @@ li {
   text-align: left;
 }
 
-/* @media screen and (max-width: 900px) {
-  ol {
-    padding-left: 3rem;
+@media screen and (max-width: 500px) {
+  h1,
+  h2,
+  h3 {
+    font-size: 20px;
   }
-} */
+  ol {
+    width: 300px;
+    padding-left: 30px;
+    font-size: 12px;
+  }
+  li {
+    padding: 6px 8px;
+  }
+}
 </style>

@@ -19,12 +19,12 @@
         <thead>
           <tr align="center" bgcolor="white">
             <!-- <td></td> -->
-            <th>링크 입력</th>
-            <th>팔로워</th>
-            <th>좋아요</th>
-            <th>댓글</th>
-            <th>인게이지먼트</th>
-            <th>입력된 링크 수</th>
+            <th class="index">링크 입력</th>
+            <th class="index">팔로워</th>
+            <th class="index">좋아요</th>
+            <th class="index">댓글</th>
+            <th class="index-engage">인게이지먼트</th>
+            <th class="index-engage">입력 링크 수</th>
           </tr>
         </thead>
 
@@ -153,6 +153,49 @@ export default defineComponent({
 
 tbody {
   max-height: 200px;
-  overflow: scroll;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 5px;
+}
+a {
+  color: #42b983;
+}
+@media screen and (max-width: 768px) {
+  .blank {
+    min-width: 80px;
+    width: 50%;
+    height: 20px;
+    max-height: 20px;
+    font-size: 15px;
+  }
+  .index,
+  .index-engage {
+    font-size: 15px;
+  }
+}
+@media screen and (max-width: 500px) {
+  h1 {
+    font-size: 25px;
+  }
+  input {
+    width: 40px;
+  }
+  .blank {
+    min-width: 40px;
+    width: 50%;
+    height: 10px;
+    max-height: 20px;
+    font-size: 10px;
+  }
+  .index,
+  .index-engage {
+    font-size: 10px;
+  }
 }
 </style>
