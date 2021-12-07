@@ -4,4 +4,12 @@ import App from './App.vue';
 import router from './router';
 import Vue from 'vue';
 
-createApp(App).use(router).mount('#app');
+import Loader from './components/Loader.vue';
+import Modal from './components/Modal.vue';
+
+const app = createApp(App);
+app.use(router);
+app.component('Loader', Loader);
+app.component('Modal', Modal);
+
+app.mount('#app');

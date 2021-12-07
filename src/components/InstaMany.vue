@@ -1,112 +1,118 @@
 <template>
-  <div>
+  <div v-if="isWarning">
+    <Modal :link="input" :close="close" />
+  </div>
+  <div v-else>
     <h1>{{ msg }}</h1>
-    <table
-      id="table-M"
-      border="1"
-      align="center"
-      width="50%"
-      height="10px"
-      cellspacing="1"
-    >
-      <caption>
-        [서버주소]
-        <input id="server-M" placeholder="위의 이메일로 연락주세요!" />
-      </caption>
-      <caption>
-        [링크주소]
-        <input
-          id="linkUrl-M"
-          placeholder="https://www.instagram.com/p/"
-          @keyup.enter="done()"
-        />
-      </caption>
-      <thead>
-        <tr align="center" bgcolor="white">
-          <!-- <td class="blank">Index</td> -->
-          <th class="blank">링크</th>
-          <th class="blank">유저이름</th>
-          <th class="blank">팔로워</th>
-          <th class="blank">좋아요</th>
-          <th class="blank">댓글</th>
-          <th class="blank">인게이지먼트</th>
-        </tr>
-      </thead>
+    <div v-if="isLoading">
+      <Loader />
+    </div>
+    <div v-else>
+      <table
+        id="table-M"
+        border="1"
+        align="center"
+        width="50%"
+        height="10px"
+        cellspacing="0"
+      >
+        <caption>
+          [링크주소]
+          <input
+            id="linkUrl-M"
+            placeholder="https://www.instagram.com/p/"
+            @keyup.enter="done()"
+          />
+          <p></p>
+        </caption>
+        <thead>
+          <tr align="center" bgcolor="white">
+            <!-- <td class="blank">Index</td> -->
+            <th class="blank">링크</th>
+            <th class="blank">유저이름</th>
+            <th class="blank">팔로워</th>
+            <th class="blank">좋아요</th>
+            <th class="blank">댓글</th>
+            <th class="blank">인게이지먼트</th>
+          </tr>
+        </thead>
 
-      <tbody v-if="instaArr.length">
-        <tr
-          v-for="(insta, idx) in instaArr"
-          v-bind:key="idx"
-          align="center"
-          bgcolor="white"
-        >
-          <!-- <th id="link-M" class="blank"></th>
-          <td id="username-M" class="blank"></td>
-          <td id="followers-M" class="blank"></td>
-          <td id="likes-M" class="blank"></td>
-          <td id="replies-M" class="blank"></td>
-          <td id="engagements-M" class="blank"></td> -->
-
-          <!-- <th class="blank">
+        <tbody v-if="instaArr.length">
+          <tr
+            v-for="(insta, idx) in instaArr"
+            v-bind:key="idx"
+            align="center"
+            bgcolor="white"
+          >
+            <!-- <th class="blank">
             {{ idx + 1 }}
           </th> -->
-          <td class="blank">{{ insta.link }}</td>
-          <td class="blank">{{ insta.username }}</td>
-          <td class="blank">{{ insta.followers }}</td>
-          <td class="blank">{{ insta.likes }}</td>
-          <td class="blank">{{ insta.replies }}</td>
-          <td class="blank">{{ insta.engagements }}</td>
-        </tr>
-      </tbody>
-    </table>
+            <td class="blank">{{ insta.link }}</td>
+            <td class="blank">{{ insta.username }}</td>
+            <td class="blank">{{ insta.followers }}</td>
+            <td class="blank">{{ insta.likes }}</td>
+            <td class="blank">{{ insta.replies }}</td>
+            <td class="blank">{{ insta.engagements }}</td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr align="center" bgcolor="white">
+            <td class="blank"></td>
+            <td class="blank"></td>
+            <td class="blank"></td>
+            <td class="blank"></td>
+            <td class="blank"></td>
+            <td class="blank"></td>
+          </tr>
+        </tbody>
+      </table>
 
-    <p>
-      <button @click="done()">완료</button>
-    </p>
+      <p>
+        <button @click="done()">완료</button>
+      </p>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios';
+import Loader from './Loader.vue';
+import Modal from './Modal.vue';
 
 export default defineComponent({
   name: 'InstaSum',
   props: {
     msg: String,
-    // instaArr: Array,
   },
+  components: { Loader, Modal },
   data() {
     return {
+      isLoading: false,
+      isWarning: false,
       instaArr: [],
+      input: '',
     };
   },
 
   methods: {
-    done: function () {
-      // type InstaObj = {
-      //   link: String;
-      //   username: String;
-      //   likes: Number;
-      //   replies: Number;
-      //   engagements: Number;
-      //   followers: Number;
-      // };
-      // let instaArrData: Array<InstaObj>;
+    close: function (): void {
+      this.isWarning = false;
+    },
 
-      console.log(
-        'axios...',
-        (document.getElementById('linkUrl-M') as HTMLInputElement)?.value
-      );
-
-      const urlsString: String = (
+    done: function (): void {
+      this.isLoading = true;
+      const urlsString: string = (
         document.getElementById('linkUrl-M') as HTMLInputElement
       )?.value;
+      this.input = urlsString;
+      console.log('axios...', urlsString);
+
       const urlArr: Array<string> = urlsString
         .split(' ')
         .filter((url) => url.slice(0, 27) === 'https://www.instagram.com/p');
       const serverUrl =
-        (document.querySelector('#server-M') as HTMLInputElement)?.value ||
+        (document.querySelector('#server') as HTMLInputElement)?.value ||
         'http://localhost:3919';
 
       axios
@@ -115,30 +121,17 @@ export default defineComponent({
         })
         .then((res) => {
           this.instaArr = res.data.instaArr;
-          // this.instaArr = res.data.instaArr;
-          // instaArrData = res.data.instaArr;
-          // (
-          //   document.getElementById('likes-M') as HTMLTableRowElement
-          // ).innerText = res.data.totalLikes;
-          // (
-          //   document.getElementById('replies-M') as HTMLTableRowElement
-          // ).innerText = res.data.totalReplies;
-          // (
-          //   document.getElementById('followers-M') as HTMLTableRowElement
-          // ).innerText = res.data.totalFollowers;
-          // (
-          //   document.getElementById('links-M') as HTMLTableColElement
-          // ).innerText = res.data.links;
         })
         .catch((err) => {
           console.log('err...', err);
           if (err.response.status === 400) {
-            alert(
-              '올바른 링크를 입력해주세요 : https://instagram.com/p/{something}'
-            );
+            this.isWarning = true;
           }
         })
-        .finally(() => console.log('done...'));
+        .finally(() => {
+          console.log('done...');
+          this.isLoading = false;
+        });
     },
   },
 });
@@ -148,6 +141,8 @@ export default defineComponent({
 <style scoped>
 .blank {
   min-width: 100px;
-  max-height: 100px;
+  width: 50%;
+  height: 20px;
+  max-height: 20px;
 }
 </style>

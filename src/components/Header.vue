@@ -1,47 +1,36 @@
 <template>
   <header>
-    <div id="header-pic">
-      <img
-        class="pic"
-        alt="SR logo"
-        :src="require('@/assets/developer D.png')"
-      />
-    </div>
-    <div id="intro">
-      <p>
-        <a href="https://mailto.ryuseongryong@gmail.com">
-          📧 E-Mail : ryuseongryong@gmail.com</a
-        >
-      </p>
-      <p>
-        <a href="https://github.com/ryuseongryong"
-          >🌲 GitHub: https://github.com/ryuseongryong</a
-        >
-      </p>
-    </div>
+    <Nav />
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
   </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Nav from './Nav.vue';
 
 export default defineComponent({
   name: 'Header',
+  components: {
+    Nav,
+  },
 });
 </script>
 
 <style scoped>
 header {
-  display: flex;
-  padding-left: 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 6vh;
 }
-#header-pic {
-  text-align: center;
-  margin: 1rem;
-}
-
-.pic {
-  width: 7rem;
-  height: 8rem;
+.bar {
+  margin: 0;
+  border: 5px solid;
+  border-color: #e34131;
 }
 </style>

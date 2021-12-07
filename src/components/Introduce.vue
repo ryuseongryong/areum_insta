@@ -25,16 +25,24 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+#intro {
+  height: 100%;
+}
+
 ol {
-  padding-left: 10rem;
+  /* padding-left: 10rem; */
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 0 auto 0 auto;
 }
 li {
   text-align: left;
 }
 
-@media screen and (max-width: 900px) {
+/* @media screen and (max-width: 900px) {
   ol {
     padding-left: 3rem;
   }
-}
+} */
 </style>
