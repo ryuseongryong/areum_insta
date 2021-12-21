@@ -25,6 +25,7 @@
             <th class="index">댓글</th>
             <th class="index-engage">인게이지먼트</th>
             <th class="index-engage">입력 링크 수</th>
+            <th class="index">에러 페이지</th>
           </tr>
         </thead>
 
@@ -45,6 +46,7 @@
               {{ insta.totalEngagements }}
             </td>
             <td id="links-S" class="blank">{{ insta.links }}</td>
+            <td id="links-S" class="blank">{{ insta.errorPage }}</td>
           </tr>
         </tbody>
       </table>
@@ -80,6 +82,7 @@ export default defineComponent({
         totalLikes: '',
         totalReplies: '',
         totalEngagements: '',
+        errorPage: '',
       },
     };
   },
@@ -110,6 +113,7 @@ export default defineComponent({
           this.insta.totalLikes = res.data.totalLikes;
           this.insta.totalReplies = res.data.totalReplies;
           this.insta.totalEngagements = res.data.totalEngagements;
+          this.insta.errorPage = res.data.errorPage;
 
           // (
           //   document.getElementById('likes-S') as HTMLTableRowElement
