@@ -116,6 +116,7 @@ export default defineComponent({
         'http://localhost:3919';
 
       axios
+        // .create({ timeout: 1000 * 60 * 5 })
         .post(`${serverUrl}/scraping/inputMany`, {
           urlArr,
         })
