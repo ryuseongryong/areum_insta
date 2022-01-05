@@ -27,7 +27,7 @@
         </caption>
         <thead>
           <tr align="center" bgcolor="white">
-            <!-- <td class="blank">Index</td> -->
+            <td class="blank">Index</td>
             <th class="blank">링크</th>
             <th class="blank">유저이름</th>
             <th class="blank">팔로워</th>
@@ -44,9 +44,9 @@
             align="center"
             bgcolor="white"
           >
-            <!-- <th class="blank">
-            {{ idx + 1 }}
-          </th> -->
+            <th class="blank">
+              {{ insta.index }}
+            </th>
             <td class="blank">{{ insta.link }}</td>
             <td class="blank">{{ insta.username }}</td>
             <td class="blank">{{ insta.followers }}</td>
